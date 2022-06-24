@@ -11,8 +11,8 @@ class SelectWidget extends StatefulWidget {
 
 class _SelectWidgetState extends State<SelectWidget> {
   final elements1 = [
-    "Admin",
     "Normal",
+    "Admin",
     
   ];
 
@@ -41,9 +41,9 @@ class _SelectWidgetState extends State<SelectWidget> {
           onSelectedItemChanged: (index) {
             setState(() {
               if(index == 0){
-                admin = true;
-              }else{
                 admin = false;
+              }else{
+                admin = true;
               }
               print(admin);
               selectedIndex1 = index;
