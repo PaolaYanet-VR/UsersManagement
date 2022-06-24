@@ -8,11 +8,11 @@ import 'package:users_management_flutter_app/Widgets/row_widget.dart';
 import '../Utils/Global.dart';
 
 class UsersPage extends StatelessWidget {
-  
+  String _selectedItem = '';
   final Stream<QuerySnapshot> users =
       FirebaseFirestore.instance.collection('users').snapshots();
   UsersPage({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,8 +44,7 @@ class UsersPage extends StatelessWidget {
                     onPressed: () {
                       userAdmin = true;
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              SignUpPage()));
+                          builder: (BuildContext context) => SignUpPage()));
                     }),
               );
             },
@@ -79,18 +78,17 @@ class UsersPage extends StatelessWidget {
                   child: Column(
                     children: [
                       RowWidget(
-                        title: '${data.docs[index]['name']} ${data.docs[index]['lastname']}',
+                        title:
+                            '${data.docs[index]['name']} ${data.docs[index]['lastname']}',
                         hasColor: false,
-                        onPressed: (){
+                        onPressed: () {
                           selectedUser.id = data.docs[index].id;
                           selectedUser.name = data.docs[index]['name'];
                           selectedUser.lastname = data.docs[index]['lastname'];
                           selectedUser.email = data.docs[index]['email'];
                           selectedUser.password = data.docs[index]['password'];
                           selectedUser.admin = data.docs[index]['admin'];
-                          Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              DetailUserPage()));
+                          _onButtonPressed(context);
                         },
                       )
                     ],
@@ -101,4 +99,53 @@ class UsersPage extends StatelessWidget {
       )),
     );
   }
+}
+
+void _onButtonPressed(BuildContext context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          color: Color(0xFF737373),
+          height: 180,
+          child: Container(
+            child: _buildBottomNavigationMenu(context),
+            decoration: BoxDecoration(
+              color: Theme.of(context).canvasColor,
+              borderRadius: BorderRadius.only(
+                topLeft: const Radius.circular(10),
+                topRight: const Radius.circular(10),
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+Column _buildBottomNavigationMenu(BuildContext context) {
+  return Column(
+    children: <Widget>[
+      ListTile(
+        leading: Icon(Icons.info_outline_rounded),
+        title: Text('User detail'),
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => DetailUserPage()));
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.delete),
+        title: Text('Delete user'),
+        onTap: () {
+          final collection = FirebaseFirestore.instance.collection('users');
+        collection 
+        .doc(selectedUser.id) // <-- Doc ID to be deleted. 
+        .delete() // <-- Delete
+        .then((_) =>  Navigator.pop(context))
+        .catchError((error) => print('Delete failed: $error'));
+        },
+      ),
+    ],
+  );
 }

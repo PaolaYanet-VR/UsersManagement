@@ -4,7 +4,10 @@ import 'package:users_management_flutter_app/Pages/LogInPage.dart';
 import 'package:users_management_flutter_app/Pages/UsersPage.dart';
 import '../Utils/Global.dart';
 import '../Widgets/button_widget.dart';
+import '../Widgets/select_widget.dart';
 import '../Widgets/textfield_widget.dart';
+
+ var admin = false;
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({Key? key}) : super(key: key);
@@ -18,7 +21,7 @@ class SignUpPage extends StatelessWidget {
   var lastName = '';
   var email = '';
   var password = '';
-  var admin = false;
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +89,7 @@ class SignUpPage extends StatelessWidget {
                 },
                 hintText: "E-mail"),
             TextFieldWidget(
+                obscureText: true,
                 isPrefixIcon: false,
                 isSuffixIcon: false,
                 isMyControllerActivated: true,
@@ -94,29 +98,16 @@ class SignUpPage extends StatelessWidget {
                   password = value;
                 },
                 hintText: "Password"),
+                definir(),
             ButtonWidget(
                 colorButton: Global.colorBase,
                 color: Global.colorBack,
                 title: "Sign Up",
                 hasColor: false,
                 onPressed: () {
-                  var missingFields = '';
                   var isNotEmpty = true;
-                  if (_controllerTxtName.text.isEmpty) {
+                  if (_controllerTxtName.text.isEmpty && _controllerTxtLastName.text.isEmpty && _controllerTxtEmail.text.isEmpty && _controllerTxtPassword.text.isEmpty) {
                     isNotEmpty = false;
-                    missingFields += 'name ';
-                  }
-                  if (_controllerTxtLastName.text.isEmpty) {
-                    isNotEmpty = false;
-                    missingFields += 'nast name ';
-                  }
-                  if (_controllerTxtEmail.text.isEmpty) {
-                    isNotEmpty = false;
-                    missingFields += 'email ';
-                  }
-                  if (_controllerTxtPassword.text.isEmpty) {
-                    isNotEmpty = false;
-                    missingFields += 'password ';
                   }
                   if (isNotEmpty) {
                     users
@@ -130,17 +121,25 @@ class SignUpPage extends StatelessWidget {
                         .then((value) => print('User Added'))
                         .catchError(
                             (error) => print('Failed to add user: $error'));
-                    if (admin) {
+                    if (userAdmin) {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (BuildContext context) => UsersPage()));
                     } else {
                       Navigator.of(context).pop();
                     }
                   } else {
-                    print("missing fields: " + missingFields);
+                    print("Empty fields " + "Fill the fields");
                   }
                 })
           ]),
         ]));
+  }
+}
+
+Widget definir(){
+  if(userAdmin){
+    return SelectWidget();
+  }else{
+    return Text("");
   }
 }
