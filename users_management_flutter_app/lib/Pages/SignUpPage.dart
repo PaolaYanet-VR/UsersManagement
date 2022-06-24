@@ -125,7 +125,7 @@ class SignUpPage extends StatelessWidget {
                       (error) => print('Failed to add user: $error'));
                   if(admin){
                     Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => const UsersPage()));
+                    builder: (BuildContext context) => UsersPage()));
                   }else{
                     Navigator.of(context).pop();
                   }

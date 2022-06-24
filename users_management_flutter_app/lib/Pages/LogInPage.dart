@@ -49,7 +49,7 @@ class LogInPage extends StatelessWidget {
           onPressed: () {
             // Do Log in
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => const UsersPage()));
+              builder: (BuildContext context) => UsersPage()));
           }
         ),
         ButtonWidget(
