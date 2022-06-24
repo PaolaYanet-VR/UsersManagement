@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:users_management_flutter_app/Models/UserModel.dart';
 import 'package:users_management_flutter_app/Pages/SignUpPage.dart';
@@ -116,10 +117,36 @@ class LogInPage extends StatelessWidget {
                               builder: (BuildContext context) => UsersPage()));
                         } else {
                           // Is not admin
-                          print("no es admin");
+                          CoolAlert.show(
+                            backgroundColor: Global.colorBack,
+                            confirmBtnColor: Global.colorBase,
+                            context: context,
+                            type: CoolAlertType.confirm,
+                            text: 'U r not Admin!',
+                          );
                         }
                       }
                     });
+
+                    if (email.isEmpty || password.isEmpty) {
+                      CoolAlert.show(
+                        backgroundColor: Global.colorBack,
+                        confirmBtnColor: Global.colorBase,
+                        context: context,
+                        type: CoolAlertType.warning,
+                        text: 'Empty fields',
+                      );
+                    } else {
+                      if (!logIn) {
+                        CoolAlert.show(
+                          backgroundColor: Global.colorBack,
+                          confirmBtnColor: Global.colorBase,
+                          context: context,
+                          type: CoolAlertType.error,
+                          text: 'Wrong Credentials',
+                        );
+                      }
+                    }
                   }),
               ButtonWidget(
                   colorButton: Global.colorBack,
