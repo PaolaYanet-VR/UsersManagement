@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:users_management_flutter_app/Pages/LogInPage.dart';
 import 'package:users_management_flutter_app/Pages/UsersPage.dart';
@@ -7,7 +8,7 @@ import '../Widgets/button_widget.dart';
 import '../Widgets/select_widget.dart';
 import '../Widgets/textfield_widget.dart';
 
- var admin = false;
+var admin = false;
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({Key? key}) : super(key: key);
@@ -21,7 +22,6 @@ class SignUpPage extends StatelessWidget {
   var lastName = '';
   var email = '';
   var password = '';
- 
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class SignUpPage extends StatelessWidget {
                   password = value;
                 },
                 hintText: "Password"),
-                definir(),
+            definir(),
             ButtonWidget(
                 colorButton: Global.colorBase,
                 color: Global.colorBack,
@@ -106,7 +106,10 @@ class SignUpPage extends StatelessWidget {
                 hasColor: false,
                 onPressed: () {
                   var isNotEmpty = true;
-                  if (_controllerTxtName.text.isEmpty && _controllerTxtLastName.text.isEmpty && _controllerTxtEmail.text.isEmpty && _controllerTxtPassword.text.isEmpty) {
+                  if (_controllerTxtName.text.isEmpty &&
+                      _controllerTxtLastName.text.isEmpty &&
+                      _controllerTxtEmail.text.isEmpty &&
+                      _controllerTxtPassword.text.isEmpty) {
                     isNotEmpty = false;
                   }
                   if (isNotEmpty) {
@@ -128,7 +131,13 @@ class SignUpPage extends StatelessWidget {
                       Navigator.of(context).pop();
                     }
                   } else {
-                    print("Empty fields " + "Fill the fields");
+                    CoolAlert.show(
+                      backgroundColor: Global.colorBack,
+                      confirmBtnColor: Global.colorBase,
+                      context: context,
+                      type: CoolAlertType.warning,
+                      text: 'Empty fields',
+                    );
                   }
                 })
           ]),
@@ -136,10 +145,10 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
-Widget definir(){
-  if(userAdmin){
+Widget definir() {
+  if (userAdmin) {
     return SelectWidget();
-  }else{
+  } else {
     return Text("");
   }
 }

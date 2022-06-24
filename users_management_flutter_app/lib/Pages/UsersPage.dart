@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:users_management_flutter_app/Models/UserModel.dart';
@@ -73,25 +74,27 @@ class UsersPage extends StatelessWidget {
                 return Divider();
               },
               itemBuilder: (context, index) {
-                return Align(
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    children: [
-                      RowWidget(
-                        title:
-                            '${data.docs[index]['name']} ${data.docs[index]['lastname']}',
-                        hasColor: false,
-                        onPressed: () {
-                          selectedUser.id = data.docs[index].id;
-                          selectedUser.name = data.docs[index]['name'];
-                          selectedUser.lastname = data.docs[index]['lastname'];
-                          selectedUser.email = data.docs[index]['email'];
-                          selectedUser.password = data.docs[index]['password'];
-                          selectedUser.admin = data.docs[index]['admin'];
-                          _onButtonPressed(context);
-                        },
-                      )
-                    ],
+                return FadeInDownBig(
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      children: [
+                        RowWidget(
+                          title:
+                              '${data.docs[index]['name']} ${data.docs[index]['lastname']}',
+                          hasColor: false,
+                          onPressed: () {
+                            selectedUser.id = data.docs[index].id;
+                            selectedUser.name = data.docs[index]['name'];
+                            selectedUser.lastname = data.docs[index]['lastname'];
+                            selectedUser.email = data.docs[index]['email'];
+                            selectedUser.password = data.docs[index]['password'];
+                            selectedUser.admin = data.docs[index]['admin'];
+                            _onButtonPressed(context);
+                          },
+                        )
+                      ],
+                    ),
                   ),
                 );
               });
