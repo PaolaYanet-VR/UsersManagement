@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:users_management_flutter_app/Models/UserModel.dart';
 import '../Utils/Global.dart';
 
 class DetailUserPage extends StatelessWidget {
@@ -28,7 +29,7 @@ class DetailUserPage extends StatelessWidget {
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
             Spacer(),
             Text(
-              "Paco Salazar",
+              selectedUser.name! +' ' + selectedUser.lastname!,
               style: TextStyle(
                   height: 1,
                   fontSize: 23,
@@ -39,12 +40,12 @@ class DetailUserPage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
                 child: Image(
                     image: NetworkImage(
-                        'https://cdn.discordapp.com/attachments/956669281813299230/989685249262907403/add-contact.png'),
+                        'https://cdn.discordapp.com/attachments/956669281813299230/989664044816429066/account.png'),
                     height: 120.0)),
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Text(
-                "ps@gmail.com",
+                selectedUser.email!,
                 style: TextStyle(
                     height: 1, fontSize: 17, color: Global.colorBase3),
               ),
@@ -52,7 +53,7 @@ class DetailUserPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               child: Text(
-                "User Type: Admin",
+                "User Type: " + typeUser(),
                 style:
                     TextStyle(height: 1, fontSize: 17, color: Global.colorBase),
               ),
@@ -60,5 +61,13 @@ class DetailUserPage extends StatelessWidget {
             Spacer(flex: 3),
           ]),
         ));
+  }
+}
+
+String typeUser(){
+  if(selectedUser.admin!){
+    return 'Admin';
+  }else{
+    return 'Normal';
   }
 }
