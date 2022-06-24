@@ -8,13 +8,15 @@ class UserModel {
   String? lastname;
   String? email;
   String? password;
+  bool? admin;
 
   UserModel({
      this.id = "",
      this.name = "",
      this.lastname = "",
      this.email = "",
-     this.password = ""
+     this.password = "",
+     this.admin = false
   });
  
 }
