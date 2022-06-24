@@ -15,6 +15,14 @@ class LogInPage extends StatelessWidget {
 
   LogInPage({Key? key}) : super(key: key);
 
+  final TextEditingController _controllerTxtEmail = TextEditingController();
+  final TextEditingController _controllerTxtPassword = TextEditingController();
+
+  var email = '';
+  var password = '';
+  var admin = false;
+  var data;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,17 +42,19 @@ class LogInPage extends StatelessWidget {
                   return Text('Loading...');
                 }
 
-                final data = snapshot.requireData;
-
-                UserModel auxUser = UserModel();
-                for (var doc in data.docs) {
+                data = snapshot.requireData;
+                
+                data.docs.forEach((doc) {
+                  UserModel auxUser = UserModel();
                   auxUser.id = doc.id;
                   auxUser.name = doc['name'];
                   auxUser.lastname = doc['lastname'];
+                  auxUser.admin = doc['admin'] as bool;
                   auxUser.email = doc['email'];
                   auxUser.password = doc['password'];
-                  usersList.add(UserModel());
-                }
+                  usersList.add(auxUser);
+                  //print(doc['email']);
+                });
 
                 return Text("");
               },
@@ -67,15 +77,24 @@ class LogInPage extends StatelessWidget {
                       'https://cdn.discordapp.com/attachments/956669281813299230/989664044816429066/account.png'),
                 ),
               ),
-              const TextFieldWidget(
+              TextFieldWidget(
                   isPrefixIcon: false,
                   isSuffixIcon: false,
                   isMyControllerActivated: true,
+                  controller: _controllerTxtEmail,
+                  onChanged: (value) {
+                    email = value;
+                  },
                   hintText: "E-mail"),
-              const TextFieldWidget(
+              TextFieldWidget(
                   isPrefixIcon: false,
                   isSuffixIcon: false,
                   isMyControllerActivated: true,
+                  controller: _controllerTxtPassword,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                  obscureText: true,
                   hintText: "Password"),
               ButtonWidget(
                   colorButton: Global.colorBase,
@@ -85,8 +104,21 @@ class LogInPage extends StatelessWidget {
                   onPressed: () {
                     // Do Log in
 
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => UsersPage()));
+                    var logIn = false;
+
+                    usersList.forEach((u) {
+                      if (u.email == email && u.password == password) {
+                        actualUser = u;
+                        logIn = true;
+                        if (u.admin == true) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) => UsersPage()));
+                        } else {
+                          // Is not admin
+                          print("no es admin");
+                        }
+                      }
+                    });
                   }),
               ButtonWidget(
                   colorButton: Global.colorBack,
