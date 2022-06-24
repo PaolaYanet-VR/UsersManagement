@@ -25,7 +25,7 @@ class UsersPage extends StatelessWidget {
                     'https://cdn.discordapp.com/attachments/956669281813299230/989698368009805896/log-out.png'),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => const LogInPage()));
+                      builder: (BuildContext context) => LogInPage()));
                 });
           },
         ),
