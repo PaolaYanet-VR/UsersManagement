@@ -8,7 +8,7 @@ import '../Widgets/button_widget.dart';
 import '../Widgets/select_widget.dart';
 import '../Widgets/textfield_widget.dart';
 
-var admin = false;
+var admin = true;
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({Key? key}) : super(key: key);

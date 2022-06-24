@@ -43,7 +43,7 @@ class LogInPage extends StatelessWidget {
                 }
 
                 data = snapshot.requireData;
-                
+                usersList = [];
                 data.docs.forEach((doc) {
                   UserModel auxUser = UserModel();
                   auxUser.id = doc.id;
