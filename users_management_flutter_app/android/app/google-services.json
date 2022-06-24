@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1015304495190",
+    "project_id": "bd-5ab2f",
+    "storage_bucket": "bd-5ab2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015304495190:android:f586da39b143fcb675dbf7",
+        "android_client_info": {
+          "package_name": "com.example.users_management_flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1015304495190-pgcvjoivmlhtcg9d9d28mvrfbkdnd17r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3tu3sk2nZvq93dv6bY9SLejuzJcAgP1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1015304495190-pgcvjoivmlhtcg9d9d28mvrfbkdnd17r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1015304495190-j1cnfvs6c2r3tl5s9go1tbeq1iog226u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "yare.Examen3P"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
