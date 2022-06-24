@@ -111,6 +111,7 @@ class LogInPage extends StatelessWidget {
                         actualUser = u;
                         logIn = true;
                         if (u.admin == true) {
+                          userAdmin = true;
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (BuildContext context) => UsersPage()));
                         } else {
@@ -126,6 +127,7 @@ class LogInPage extends StatelessWidget {
                   title: "Or Sign Up",
                   hasColor: false,
                   onPressed: () {
+                    userAdmin = false;
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) => SignUpPage()));
                   })
