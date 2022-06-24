@@ -1,14 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:users_management_flutter_app/Pages/LogInPage.dart';
+import 'package:users_management_flutter_app/Pages/UsersPage.dart';
 import '../Utils/Global.dart';
 import '../Widgets/button_widget.dart';
 import '../Widgets/textfield_widget.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  SignUpPage({Key? key}) : super(key: key);
+
+  final TextEditingController _controllerTxtName = TextEditingController();
+  final TextEditingController _controllerTxtLastName = TextEditingController();
+  final TextEditingController _controllerTxtEmail = TextEditingController();
+  final TextEditingController _controllerTxtPassword = TextEditingController();
+
+  var name = '';
+  var lastName = '';
+  var email = '';
+  var password = '';
+  var admin = false;
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -47,21 +61,37 @@ class SignUpPage extends StatelessWidget {
               isPrefixIcon: false,
               isSuffixIcon: false,
               isMyControllerActivated: true,
+              controller: _controllerTxtName,
+              onChanged: (value){
+                name = value;
+              },
               hintText: "Firstname"),
           TextFieldWidget(
               isPrefixIcon: false,
               isSuffixIcon: false,
               isMyControllerActivated: true,
+              controller: _controllerTxtLastName,
+              onChanged: (value){
+                lastName = value;
+              },
               hintText: "Lastname"),
           TextFieldWidget(
               isPrefixIcon: false,
               isSuffixIcon: false,
               isMyControllerActivated: true,
+              controller: _controllerTxtEmail,
+              onChanged: (value){
+                email = value;
+              },
               hintText: "E-mail"),
           TextFieldWidget(
               isPrefixIcon: false,
               isSuffixIcon: false,
               isMyControllerActivated: true,
+              controller: _controllerTxtPassword,
+              onChanged: (value){
+                password = value;
+              },
               hintText: "Password"),
           ButtonWidget(
               colorButton: Global.colorBase,
@@ -69,8 +99,39 @@ class SignUpPage extends StatelessWidget {
               title: "Sign Up",
               hasColor: false,
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => const LogInPage()));
+                var missingFields = '';
+                var isNotEmpty = true;
+                if(_controllerTxtName.text.isEmpty){
+                  isNotEmpty = false;
+                  missingFields += 'name ';
+                }
+                if(_controllerTxtLastName.text.isEmpty){
+                  isNotEmpty = false;
+                  missingFields += 'nast name ';
+                }
+                if(_controllerTxtEmail.text.isEmpty){
+                  isNotEmpty = false;
+                  missingFields += 'email ';
+                }
+                if(_controllerTxtPassword.text.isEmpty){
+                  isNotEmpty = false;
+                  missingFields += 'password ';
+                }
+                if(isNotEmpty){
+                   users
+                    .add({'name': name, 'lastname': lastName, 'email': email, 'password': password, 'admin': admin})
+                    .then((value) => print('User Added'))
+                    .catchError(
+                      (error) => print('Failed to add user: $error'));
+                  if(admin){
+                    Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => const UsersPage()));
+                  }else{
+                    Navigator.of(context).pop();
+                  }
+                }else{
+                  print("missing fields: " + missingFields);
+                }
               })
         ]));
   }

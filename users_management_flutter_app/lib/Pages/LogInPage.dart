@@ -59,7 +59,7 @@ class LogInPage extends StatelessWidget {
           hasColor: false,
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => const SignUpPage()));
+              builder: (BuildContext context) => SignUpPage()));
           }
         )
       ])
