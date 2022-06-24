@@ -27,19 +27,26 @@ class LogInPage extends StatelessWidget {
               stream: users,
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Something went wrong :(');
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text('Loading...');
+                }
+
                 final data = snapshot.requireData;
 
-                data.docs.forEach((u) {
-                  UserModel auxUser = UserModel();
-                  auxUser.id = u['id'];
-                  auxUser.name = u['name'];
-                  auxUser.lastname = u['lastname'];
-                  auxUser.email = u['email'];
-                  auxUser.password = u['password'];
+                UserModel auxUser = UserModel();
+                for (var doc in data.docs) {
+                  auxUser.id = doc.id;
+                  auxUser.name = doc['name'];
+                  auxUser.lastname = doc['lastname'];
+                  auxUser.email = doc['email'];
+                  auxUser.password = doc['password'];
                   usersList.add(UserModel());
-                });
+                }
 
-                return Spacer();
+                return Text("");
               },
             )),
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
